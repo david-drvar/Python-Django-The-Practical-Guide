@@ -2,29 +2,23 @@
 {% load static %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static "blog/index.css" %}">
+    <link rel="stylesheet" href="{% static "blog/post.css" %}">
+    <link rel="stylesheet" href="{% static "blog/all-posts.css" %}">
+{% endblock %}
+
+{% block title %}
+    All my posts
 {% endblock %}
 
 {% block content %}
-    {% include "blog/includes/header.html" %}
+    <section id="all-posts">
+        <h2>My collected Posts</h2>
 
-    <h1>My collected posts</h1>
-
-    <div>
-        <div class="card">
-          <img src="img_avatar.png" alt="Avatar" style="width:100%">
-          <div class="container">
-            <h4><b>John Doe</b></h4>
-            <p>Architect & Engineer</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <img src="img_avatar.png" alt="Avatar" style="width:100%">
-          <div class="container">
-            <h4><b>John D22oe</b></h4>
-            <p>Architect & Enasdasgineer</p>
-          </div>
-        </div>
-    </div>
+        <ul>
+            {% include "blog/includes/post.html" %}
+            {% include "blog/includes/post.html" %}
+            {% include "blog/includes/post.html" %}
+            {% include "blog/includes/post.html" %}
+        </ul>
+    </section>
 {% endblock %}

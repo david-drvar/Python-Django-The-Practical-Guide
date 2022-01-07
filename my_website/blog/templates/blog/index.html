@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css_files %}
+    <link rel="stylesheet" href="{% static "blog/post.css" %}">
     <link rel="stylesheet" href="{% static "blog/index.css" %}">
 {% endblock %}
 
@@ -10,7 +11,6 @@
 {% endblock %}
 
 {% block content %}
-    {% include "blog/includes/header.html" %}
 
     <section id="welcome">
         <header>
@@ -22,19 +22,9 @@
 
     <section id="latest-posts">
         <h2>My Latest Thoughts</h2>
+
         <ul>
-            <li>
-                <article class="post">
-                    <a href="">
-                        <img src="" alt="Mountain Hiking"/>
-                        <div class="post__content">
-                            <h3>Mountain Hiking</h3>
-                            <p>There's nothing like the views you get when hiking in the mountains! And I wasn't event
-                            prepared for what happened whilst I was enjoying the view!</p>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% include "blog/includes/post.html" %}
         </ul>
     </section>
 
