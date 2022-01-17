@@ -3,12 +3,21 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from django.views import View
+
 from reviews.forms import ReviewForm
 from reviews.models import Review
 
 
-def index(request):
-    if request.method == 'POST':
+class ReviewView(View):
+    def get(self, request):
+        form = ReviewForm()
+
+        return render(request, "reviews/review.html", {
+            "form": form
+        })
+
+    def post(self, request):
         # existing_model = Review.objects.get(pk=1)
         # form = ReviewForm(request.POST, instance=existing_model)  INSTANCE IS FOR UPDATING!
         form = ReviewForm(request.POST)
@@ -17,12 +26,9 @@ def index(request):
             # review.save()
             form.save()
             return HttpResponseRedirect("/thank-you")
-    else:
-        form = ReviewForm()
-
-    return render(request, "reviews/review.html", {
-        "form": form
-    })
+        return render(request, "reviews/review.html", {
+            "form": form
+        })
 
 
 def thank_you(request):

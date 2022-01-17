@@ -1,8 +1,9 @@
 from django.urls import path
 
-from reviews.views import index, thank_you
+import reviews.views
+from reviews.views import thank_you
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", reviews.views.ReviewView.as_view(), name="index"),
     path("thank-you", thank_you)
 ]
