@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import View
 
 # Create your views here.
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from profiles.forms import ProfileForm
 from profiles.models import UserProfile
@@ -20,6 +20,7 @@ class CreateProfileView(CreateView):
     model = UserProfile
     fields = "__all__"
     success_url = "/profiles"
+
 
 # class CreateProfileView(View):
 #     def get(self, request):
@@ -38,3 +39,10 @@ class CreateProfileView(CreateView):
 #         return render(request, "profiles/create_profile.html", {
 #             "form" : submitted_form
 #         })
+
+
+class ProfilesView(ListView):
+    model = UserProfile
+    template_name = "profiles/user_profiles.html"
+    context_object_name = "profiles"
+
