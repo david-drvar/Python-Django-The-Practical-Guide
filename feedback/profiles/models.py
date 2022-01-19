@@ -5,4 +5,4 @@ from django.db import models
 
 
 class UserProfile(models.Model):
-    image = models.FileField(upload_to="images")  # file will not be stored in a database, instead on a local hardrive and store path
+    image = models.ImageField(upload_to="images")  # file will not be stored in a database, instead on a local hardrive and store path
