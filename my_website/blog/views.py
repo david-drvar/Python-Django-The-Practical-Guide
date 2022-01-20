@@ -1,9 +1,12 @@
 from datetime import date
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.views import View
 from django.views.generic import ListView, DetailView
 
+from .forms import CommentForm
 from .models import Post
 
 
@@ -41,14 +44,32 @@ class AllPostsView(ListView):
 #     })
 
 
-class SinglePostView(DetailView):
-    template_name = "blog/post-detail.html"
-    model = Post
+class SinglePostView(View):
+    def get(self, request,slug):
+        post = Post.objects.get(slug=slug)
+        context = {
+            "post": post,
+            "form" : CommentForm()
+        }
+        return render(request, "blog/post-detail.html", context)
 
-    # def get_context_data(self, **kwargs):     I don't need this because I referenced tags directly in post-detail.html
-    #     context = super().get_context_data(**kwargs)
-    #     context["post_tags"] = self.object.tags.all()
-    #     return context
+    def post(self, request, slug):
+        comment_form = CommentForm(request.POST)
+        post = Post.objects.get(slug=slug)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)  #bind comment with post because it is missing in form
+            comment.post = post
+            comment.save()
+
+            return HttpResponseRedirect(reverse("post-detail", args=[slug]))
+
+        context = {
+            "post": post,
+            "form" : comment_form
+        }
+        return render(request, "blog/post-detail.html", context)
+
 
 # def post_detail(request, slug):
 #     # identified_post = Post.objects.get(slug=slug)
