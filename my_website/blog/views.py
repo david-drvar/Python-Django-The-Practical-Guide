@@ -37,6 +37,7 @@ class AllPostsView(ListView):
     ordering = ["-date"]
     context_object_name = "all_posts"
 
+
 # def all_posts(request):
 #     posts = Post.objects.all().order_by("-date")
 #     return render(request, "blog/all-posts.html", {
@@ -45,11 +46,12 @@ class AllPostsView(ListView):
 
 
 class SinglePostView(View):
-    def get(self, request,slug):
+    def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         context = {
             "post": post,
-            "form" : CommentForm()
+            "form": CommentForm(),
+            "comments": post.comments.all().order_by("-id")
         }
         return render(request, "blog/post-detail.html", context)
 
@@ -58,7 +60,7 @@ class SinglePostView(View):
         post = Post.objects.get(slug=slug)
 
         if comment_form.is_valid():
-            comment = comment_form.save(commit=False)  #bind comment with post because it is missing in form
+            comment = comment_form.save(commit=False)  # bind comment with post because it is missing in form
             comment.post = post
             comment.save()
 
@@ -66,10 +68,10 @@ class SinglePostView(View):
 
         context = {
             "post": post,
-            "form" : comment_form
+            "form": comment_form,
+            "comments": post.comments.all().order_by("-id")
         }
         return render(request, "blog/post-detail.html", context)
-
 
 # def post_detail(request, slug):
 #     # identified_post = Post.objects.get(slug=slug)
