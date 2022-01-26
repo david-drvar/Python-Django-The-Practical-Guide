@@ -121,7 +121,7 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR / "staticfiles"  # for django command which collects all static files into this folder
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"
