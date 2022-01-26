@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 from os import getenv
 from pathlib import Path
 
@@ -19,13 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ggy_)1h7hrk*9-chk$sf2x+6p7e_lv0l(2oq4^08um7z17u5)m'   # getenv("SECRET_KEY")
+SECRET_KEY = 'django-insecure-ggy_)1h7hrk*9-chk$sf2x+6p7e_lv0l(2oq4^08um7z17u5)m'  # getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv("IS_DEVELOPMENT", True)
 
 ALLOWED_HOSTS = [
-    getenv("APP_HOST")
+    getenv("APP_HOST", "127.0.0.1"),
 ]
 
 # Application definition
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'my_website.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'djangoblog',
+        'PASSWORD': os.getenv("PASSWORD"),
+        'HOST': 'django-blog.cdqi9m9nd2ko.us-east-2.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
